@@ -11,7 +11,8 @@ data_folder = (Path('.') / 'data' ).resolve()
 
 parkinglots_data = pd.read_csv(data_folder / f'chefmozparking.csv')
 cities_data = pd.read_csv(data_folder / f'geoplaces2.csv')
-parkinglots_data = pd.read_csv(data_folder / f'chefmozparking.csv')
+user_data = pd.read_csv(data_folder / f'userprofile.csv')
+
 
 def check_parking_lot():
     valid_PID = {}
@@ -20,6 +21,7 @@ def check_parking_lot():
         if parkinglots_data["parking_lot"][i]!= "none":
             valid_PID[0].append(str(parkinglots_data["placeID"][i]))
     return valid_PID
+
 
 def check_city(city):
     valid_cities = {}
@@ -32,7 +34,13 @@ def check_city(city):
         return "error: city probably not found"
     return valid_cities
 
-def calculate_distance(lat1, lon1):
+
+def calculate_distance(userID):
+    for i in range(len(user_data)):
+        if user_data["userID"][i] == userID:
+            lat1 = user_data["latitude"][i]
+            lon1 = user_data["longitude"][i]
+            break
     restaurants = {}
     top10 = {0:[]}
     for i in range(len(cities_data)):
@@ -41,7 +49,7 @@ def calculate_distance(lat1, lon1):
     count = 0
     keylist = list(restaurants.keys())
     keylist.sort()
-    print(keylist)
+
     for i in restaurants:
         top10[keylist[count]] = restaurants[i]
         count += 1

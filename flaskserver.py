@@ -24,9 +24,9 @@ def city(cityname):
     data = main.check_city(cityname)
     return data
 
-@app.route('/10closest')
-def closest_cities():
-    return main.calculate_distance(23.7526973,-99.1633594)
+@app.route('/10closest/<userID>')
+def closest_cities(userID):
+    return main.calculate_distance(userID)
 
 
 if __name__ == '__main__':
