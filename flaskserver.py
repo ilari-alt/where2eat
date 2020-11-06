@@ -12,10 +12,18 @@ def hello():
 def hello_name(name):
     return "Hello {}!".format(name)
 
+
 @app.route('/parkinglots')
 def parkinglots():
     data = main.check_parking_lot()
     return data
+
+
+@app.route('/city/<cityname>')
+def city(cityname):
+    data = main.check_city(cityname)
+    return data
+
 
 if __name__ == '__main__':
     app.run()

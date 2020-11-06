@@ -8,17 +8,28 @@ from pathlib import Path
 # Change the data folder to where you have downloaded the original data
 data_folder = (Path('.') / 'data' ).resolve()
 
-places_accept_df = pd.read_csv(data_folder / f'chefmozparking.csv')
-
-
+parkinglots_data = pd.read_csv(data_folder / f'chefmozparking.csv')
+cities_data = pd.read_csv(data_folder / f'geoplaces2.csv')
+parkinglots_data = pd.read_csv(data_folder / f'chefmozparking.csv')
 
 def check_parking_lot():
     valid_PID = {}
     valid_PID[0] = []
-    for i in range(len(places_accept_df)):
-        if places_accept_df["parking_lot"][i]!="none":
-            valid_PID[0].append(str(places_accept_df["placeID"][i]))
+    for i in range(len(parkinglots_data)):
+        if parkinglots_data["parking_lot"][i]!= "none":
+            valid_PID[0].append(str(parkinglots_data["placeID"][i]))
     return valid_PID
+
+def check_city(city):
+    valid_cities = {}
+    valid_cities[0] = []
+    try:
+        for i in range(len(parkinglots_data)):
+            if parkinglots_data[city][i]!= "none":
+                valid_cities[0].append(str(parkinglots_data["placeID"][i]))
+    except:
+        return {["error: city probably not found"]}
+    return valid_cities
 
 
 
