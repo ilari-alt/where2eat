@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import distance
 #from aito.schema import AitoStringType, AitoTextType, AitoDelimiterAnalyzerSchema, AitoTableSchema, AitoColumnLinkSchema, AitoDatabaseSchema
 #from aito.client import AitoClient
 #import aito.api as aito_api
@@ -24,12 +25,29 @@ def check_city(city):
     valid_cities = {}
     valid_cities[0] = []
     try:
-        for i in range(len(parkinglots_data)):
-            if parkinglots_data[city][i]!= "none":
-                valid_cities[0].append(str(parkinglots_data["placeID"][i]))
+        for i in range(len(cities_data)):
+            if cities_data["city"][i] != city:
+                valid_cities[0].append(str(cities_data["name"][i]))
     except:
-        return {["error: city probably not found"]}
+        return "error: city probably not found"
     return valid_cities
+
+def calculate_distance(lat1, lon1):
+    restaurants = {}
+    top10 = {0:[]}
+    for i in range(len(cities_data)):
+        d = distance.get(lat1,lon1,cities_data["latitude"][i], cities_data["longitude"][i])
+        restaurants[d]=cities_data["name"][i]
+    count = 0
+    keylist = list(restaurants.keys())
+    keylist.sort()
+    print(keylist)
+    for i in restaurants:
+        top10[keylist[count]] = restaurants[i]
+        count += 1
+        if count == 10:
+            break
+    return top10
 
 
 
