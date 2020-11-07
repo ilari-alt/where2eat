@@ -1,16 +1,26 @@
 import React, { useState } from 'react'
 
 const StartPage = () =>{
+    const [startPageVisible, setStartPageVisible] = useState(true)
+
+    const loadJoinPage = () =>{
+        setStartPageVisible(!startPageVisible)
+      }
+    
+    if(!startPageVisible){
+      return(
+        null
+      )
+    }
     return(
         <div>
-            <h1> OPT2EAT </h1> 
             <div>
                 Create a group or join an existing one
             </div>
             <button>CREATE</button>
-            <button>JOIN</button>
+            <button onClick = {loadJoinPage}>JOIN</button>
         </div>
     )
-}
+  }
 
 export default StartPage
