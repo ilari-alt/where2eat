@@ -37,7 +37,7 @@ def groups(groupID):
     data = loads(d)
     if request.method == 'POST':
         print("POST user", data["userID"], "to", groupID)
-        return main.create_group(groupID, data["userID"])
+        return main.add_member_to_group(groupID, data["userID"])
 
 
 if __name__ == '__main__':
