@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseUrl = 'placehold'
+const baseUrl = 'http://127.0.0.1:5000/'
 
 
 const getRestaurants = () => {

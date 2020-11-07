@@ -1,6 +1,5 @@
 import React, {useState,useEffect} from 'react'
-import StartPage from './components/startpage'
-
+import groupService from './services/groupService'
 
 const App = () =>{
   const [startPage, showStartPage] = useState(true)
@@ -28,6 +27,7 @@ const App = () =>{
 
   const joinToGroupPage = (event) =>{
     event.preventDefault()
+    setGroup(groupService.addUser())
     loadShowGroupNamePage()
     loadGroupViewPage()
   }
