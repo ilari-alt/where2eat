@@ -62,22 +62,21 @@ def calculate_distance(userID):
 def create_group(groupID, userID):
     new_group = []
     new_group.append(userID)
-
-    r = csv.reader(open('./data/groupdata.csv'))  # Here your csv file
+    file = open('./data/groupdata.csv')
+    r = csv.reader(file)  # Here your csv file
     lines = list(r)
     for line in lines:
         if line[0]==groupID:
+            groupmembers = line[1:]
             for i in range(len(line)):
                 if line[i] == '':
-                    print("adding user", userID, "to grou slot", i)
+                    print("adding user", userID, "to group slot", i)
                     line[i]=userID
                     break
-    writer = csv.writer(open('./data/groupdata.csv', 'w', newline=''))
-    writer.writerows(lines)
+    file.close()
 
-    r = csv.reader(open('./data/groupdata.csv'))  # Here your csv file
-    lines = list(r)
-    return {0:lines}
+    return {0:groupmembers}
+
 
 
 '''
