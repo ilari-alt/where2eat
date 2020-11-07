@@ -36,8 +36,11 @@ def groups(groupID):
     d = data.replace('"', "\"")
     data = loads(d)
     if request.method == 'POST':
-        print("POST user", data["userID"])
-        return main.create_group(groupID, request.form['userID'])
+        print("POST user", data["userID"], "to", groupID)
+        returndata = main.create_group(groupID, data["userID"])
+        print(returndata)
+        return returndata
+
 
 if __name__ == '__main__':
     app.run()
