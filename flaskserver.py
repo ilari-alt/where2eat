@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 import main
 app = Flask(__name__)
 
@@ -28,6 +28,10 @@ def city(cityname):
 def closest_cities(userID):
     return main.calculate_distance(userID)
 
+@app.route('/groups/<groupID>/<userID>', methods=['GET','POST'])
+def groups():
+    error = None
+    return main.create_group(request.form['groupID'],request.form['userID'])
 
 if __name__ == '__main__':
     app.run()
