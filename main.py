@@ -1,4 +1,5 @@
 import pandas as pd
+import csv
 import numpy as np
 import distance
 #from aito.schema import AitoStringType, AitoTextType, AitoDelimiterAnalyzerSchema, AitoTableSchema, AitoColumnLinkSchema, AitoDatabaseSchema
@@ -58,4 +59,56 @@ def calculate_distance(userID):
     return top10
 
 
+def create_group(groupID, userID):
 
+    new_group = []
+    new_group.append(userID)
+
+    r = csv.reader(open('./data/groupdata.csv'))  # Here your csv file
+    lines = list(r)
+
+    print(lines)
+    for line in lines:
+        if line[0]==groupID:
+            for i in range(len(line)):
+                if line[i] == '':
+                    line[i]=userID
+                    break
+    writer = csv.writer(open('./data/groupdata.csv', 'w', newline=''))
+    writer.writerows(lines)
+
+    r = csv.reader(open('./data/groupdata.csv'))  # Here your csv file
+    lines = list(r)
+    return {0:lines}
+
+
+'''
+    with open('./data/groupdata.csv', 'w', newline='') as outf:
+            writer = csv.DictWriter(outf, fieldnames=fieldnames)
+            for row in lines:
+                if row["groupID"]==groupID:
+                    group=row
+                    for member in group:
+                        print(member)
+                        if len(new_group)!=5:
+                            if member:
+                                new_group.append(group[member])
+
+                            else:
+                                new_group.append(None)
+
+                    writer.writerow({'groupID': groupID,
+                                     'user1': new_group[0],
+                                     'user2': new_group[1],
+                                     'user3': new_group[2],
+                                     'user4': new_group[3],
+                                     'user5': new_group[4]})
+
+                else:
+                    writer.writerow(row)
+
+                    for i in range(6 - len(new_group)):
+                        new_group.append(None)'''
+
+
+create_group("2","U1007")
