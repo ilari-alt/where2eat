@@ -2,9 +2,9 @@ import pandas as pd
 import csv
 import numpy as np
 import distance
-from aito.schema import AitoStringType, AitoTextType, AitoDelimiterAnalyzerSchema, AitoTableSchema, AitoColumnLinkSchema, AitoDatabaseSchema
-from aito.client import AitoClient
-import aito.api as aito_api
+#from aito.schema import AitoStringType, AitoTextType, AitoDelimiterAnalyzerSchema, AitoTableSchema, AitoColumnLinkSchema, AitoDatabaseSchema
+#from aito.client import AitoClient
+#import aito.api as aito_api
 
 from pathlib import Path
 # Change the data folder to where you have downloaded the original data

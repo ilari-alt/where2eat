@@ -5,6 +5,8 @@ from json import loads
 import main
 app = Flask(__name__)
 CORS(app)
+
+
 @app.route('/')
 def hello():
     return "Hello World!"
@@ -26,9 +28,11 @@ def city(cityname):
     data = main.check_city(cityname)
     return data
 
+
 @app.route('/10closest/<userID>')
 def closest_cities(userID):
     return main.calculate_distance(userID)
+
 
 @app.route('/groups/<groupID>', methods=['POST', 'GET'])
 def groups(groupID):
@@ -40,6 +44,7 @@ def groups(groupID):
         return main.add_member_to_group(groupID, data["userID"])
     else:
         return main.add_member_to_group(groupID, "", "GET")
+
 
 if __name__ == '__main__':
     app.run()
