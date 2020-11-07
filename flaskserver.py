@@ -1,8 +1,9 @@
 from flask import Flask, request
+from flask_cors import CORS
+
 import main
 app = Flask(__name__)
-
-
+CORS(app)
 @app.route('/')
 def hello():
     return "Hello World!"
@@ -28,10 +29,12 @@ def city(cityname):
 def closest_cities(userID):
     return main.calculate_distance(userID)
 
-@app.route('/groups/<groupID>/<userID>', methods=['GET','POST'])
-def groups():
-    error = None
-    return main.create_group(request.form['groupID'],request.form['userID'])
+@app.route('/groups/<groupID>', methods=['POST'])
+def groups(groupID):
+    print(groupID)
+    print(request.get_data())
+    if request.method == 'POST':
+        return main.create_group(groupID,request.form['userID'])
 
 if __name__ == '__main__':
     app.run()

@@ -60,10 +60,9 @@ def calculate_distance(userID):
 
 
 def create_group(groupID, userID):
-    group = {}
+
     new_group = []
     new_group.append(userID)
-    fieldnames = ["groupID", "user1", "user2", "user3", "user4", "user5"]
 
     r = csv.reader(open('./data/groupdata.csv'))  # Here your csv file
     lines = list(r)
