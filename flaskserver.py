@@ -30,15 +30,16 @@ def city(cityname):
 def closest_cities(userID):
     return main.calculate_distance(userID)
 
-@app.route('/groups/<groupID>', methods=['POST'])
+@app.route('/groups/<groupID>', methods=['POST', 'GET'])
 def groups(groupID):
-    data = request.get_data().decode('UTF-8')
-    d = data.replace('"', "\"")
-    data = loads(d)
     if request.method == 'POST':
+        data = request.get_data().decode('UTF-8')
+        d = data.replace('"', "\"")
+        data = loads(d)
         print("POST user", data["userID"], "to", groupID)
         return main.add_member_to_group(groupID, data["userID"])
-
+    else:
+        return main.add_member_to_group(groupID, "", "GET")
 
 if __name__ == '__main__':
     app.run()

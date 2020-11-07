@@ -2,9 +2,9 @@ import pandas as pd
 import csv
 import numpy as np
 import distance
-#from aito.schema import AitoStringType, AitoTextType, AitoDelimiterAnalyzerSchema, AitoTableSchema, AitoColumnLinkSchema, AitoDatabaseSchema
-#from aito.client import AitoClient
-#import aito.api as aito_api
+from aito.schema import AitoStringType, AitoTextType, AitoDelimiterAnalyzerSchema, AitoTableSchema, AitoColumnLinkSchema, AitoDatabaseSchema
+from aito.client import AitoClient
+import aito.api as aito_api
 
 from pathlib import Path
 # Change the data folder to where you have downloaded the original data
@@ -37,6 +37,8 @@ def check_city(city):
 
 
 def calculate_distance(userID):
+    lat1 = 0
+    lon1 = 0
     for i in range(len(user_data)):
         if user_data["userID"][i] == userID:
             lat1 = user_data["latitude"][i]
@@ -59,9 +61,9 @@ def calculate_distance(userID):
     return top10
 
 
-def add_member_to_group(groupID, userID):
+def add_member_to_group(groupID, userID, method="POST"):
 
-    group_members=[]
+    group_members = []
 
     file = open('./data/groupdata.csv')
     r = csv.reader(file)  # Here your csv file
@@ -69,15 +71,17 @@ def add_member_to_group(groupID, userID):
     for line in lines:
         if line[0]==groupID:
             group_members = line[1:]
+            if method == "GET":
+                return {"group":group_members}
             for i in range(len(line)):
                 if line[i] == userID:
+                    print("error: already added")
                     return {"error:":"user already in group!","group":group_members}
                 if line[i] == '':
                     print("adding user", userID, "to group slot", i)
                     line[i]=userID
                     break
     file.close()
-
     return {"group":group_members}
 
 
