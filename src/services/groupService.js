@@ -8,9 +8,11 @@ const getGroup = () => {
 }
 
 const addUser = () => {
+
     const user = {
         userID : 'U1100'
     }
+
     const request = axios.post(baseUrl, user)
     return request.then(response => response.data)
 }

@@ -1,5 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS
+from json import loads
 
 import main
 app = Flask(__name__)
@@ -31,10 +32,12 @@ def closest_cities(userID):
 
 @app.route('/groups/<groupID>', methods=['POST'])
 def groups(groupID):
-    print(groupID)
-    print(request.get_data())
+    data = request.get_data().decode('UTF-8')
+    d = data.replace('"', "\"")
+    data = loads(d)
     if request.method == 'POST':
-        return main.create_group(groupID,request.form['userID'])
+        print("POST user", data["userID"])
+        return main.create_group(groupID, request.form['userID'])
 
 if __name__ == '__main__':
     app.run()
