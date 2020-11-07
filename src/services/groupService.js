@@ -7,13 +7,9 @@ const getGroup = () => {
     return request.then(response => response.data)
 }
 
-const addUser = () => {
+const addUser = async newObj => {
 
-    const user = {
-        userID : 'U1100'
-    }
-
-    const request = axios.post(baseUrl, user)
+    const request = axios.post(baseUrl, newObj)
     return request.then(response => response.data)
 }
 

@@ -27,7 +27,10 @@ const App = () =>{
 
   const joinToGroupPage = (event) =>{
     event.preventDefault()
-    setGroup(groupService.addUser())
+    const groupObj = {
+      groupID : `${group}`
+    }
+    setGroup(groupService.addUser(groupObj))
     loadShowGroupNamePage()
     loadGroupViewPage()
   }
@@ -87,7 +90,7 @@ const App = () =>{
       <div>
         <div>Enter group name</div>
         <form onSubmit = {joinToGroupPage}>
-          <input></input>
+          <input onChange = {({target}) => setGroup(target.value)}></input>
           <button type = "submit">JOIN</button>
         </form>
       </div>
