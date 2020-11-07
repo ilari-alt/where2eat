@@ -8,7 +8,7 @@ const getGroup = () => {
 }
 
 const addUser = async newObj => {
-
+    console.log(newObj)
     const request = axios.post(baseUrl, newObj)
     return request.then(response => response.data)
 }

@@ -1,11 +1,15 @@
 import React, {useState,useEffect} from 'react'
 import groupService from './services/groupService'
 
-const App = () =>{
+const App = (props) =>{
   const [startPage, showStartPage] = useState(true)
   const [groupNamePage, showGroupNamePage] = useState(false)
   const [groupViewPage, showGroupViewPage] = useState(false)
-  const [group, setGroup] = useState('')
+
+  const [newGroup, setGroup] = useState('')
+
+  const [newUserID, setNewUserID] = useState('')
+  const [userID, setUser] = useState('')
 
 
   const loadJoinPage = () =>{
@@ -27,8 +31,9 @@ const App = () =>{
 
   const joinToGroupPage = (event) =>{
     event.preventDefault()
+    console.log(event.target)
     const groupObj = {
-      groupID : `${group}`
+      userID : 'U1234'
     }
     setGroup(groupService.addUser(groupObj))
     loadShowGroupNamePage()
@@ -39,6 +44,11 @@ const App = () =>{
     showStartPage(true)
     showGroupNamePage(false)
     showGroupViewPage(false)
+  }
+
+  const handleUserID = (event) => {
+    console.log(event.target.value)
+    setNewUserID(event.target.value)
   }
 
   const StartPage = () =>{
@@ -75,12 +85,6 @@ const App = () =>{
 
   const FindGroupPage = () => {
 
-    const handleSubmit = (event) => {
-      event.preventDefault()
-      console.log(event.target.value)
-      setGroup(event.target.value)
-    }
-
     if(!groupNamePage){
       return(
         null
@@ -88,9 +92,15 @@ const App = () =>{
     }
     return(
       <div>
-        <div>Enter group name</div>
         <form onSubmit = {joinToGroupPage}>
-          <input onChange = {({target}) => setGroup(target.value)}></input>
+          <div>Enter user id</div>
+          <input 
+            type = "text"
+            value = {newUserID}
+            onChange = {handleUserID}
+          />
+          <div>Enter group name</div>
+          <input></input>
           <button type = "submit">JOIN</button>
         </form>
       </div>
@@ -99,13 +109,27 @@ const App = () =>{
 
   return(
     <div>
+
       <h1> OPT2EAT </h1> 
-      <StartPage></StartPage>
-      <FindGroupPage></FindGroupPage>
+      <h2> Join a group:</h2>
+      <div>
+        <form onSubmit = {joinToGroupPage}>
+          <div>Enter your user id</div>
+          <input 
+            type = "text"
+            value = {newUserID}
+            onChange = {handleUserID}
+          />
+          <div>Enter group id you want to join</div>
+          <input></input>
+          <button type = "submit">JOIN</button>
+        </form>
+      </div>
       <GroupPage></GroupPage>
-      <button onClick = {handleBackButton}>Back</button>
     </div>
   )
 }
-
+//<button onClick = {handleBackButton}>Back</button>
+//      <StartPage></StartPage>
+//<FindGroupPage></FindGroupPage>
 export default App
