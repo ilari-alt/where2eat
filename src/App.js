@@ -1,37 +1,108 @@
-import './App.css'
 import React, {useState,useEffect} from 'react'
+import StartPage from './components/startpage'
 
 
 const App = () =>{
-  const [city, setCity] = useState('')
-  const [country, setCountry] = useState('')
+  const [startPage, showStartPage] = useState(true)
+  const [groupNamePage, showGroupNamePage] = useState(false)
+  const [groupViewPage, showGroupViewPage] = useState(false)
+  const [group, setGroup] = useState('')
 
-  const handleSearchInfo = async (event) =>{
-    event.preventDefault()
-    console.log(city)
-    console.log(country)
+
+  const loadJoinPage = () =>{
+    showStartPage(!startPage)
   }
 
-  const handleSetCountry = (event) => {
-    event.preventDefault()
-    setCountry(event.target.value)
+  const loadShowGroupNamePage = () =>{
+    showGroupNamePage(!groupNamePage)
   }
 
-  const handleSetCity = (event) => {
+  const loadGroupViewPage = () => {
+    showGroupViewPage(!groupViewPage)
+  }
+
+  const startToJoinPage = () =>{
+    loadJoinPage()
+    loadShowGroupNamePage()
+  }
+
+  const joinToGroupPage = (event) =>{
     event.preventDefault()
-    setCity(event.target.value)
+    loadShowGroupNamePage()
+    loadGroupViewPage()
+  }
+  
+  const handleBackButton = () => {
+    showStartPage(true)
+    showGroupNamePage(false)
+    showGroupViewPage(false)
+  }
+
+  const StartPage = () =>{
+    if(!startPage){
+      return(
+        null
+      )
+    }
+    return(
+        <div>
+            <div>
+                Create a group or join an existing one
+            </div>
+            <button>CREATE</button>
+            <button onClick = {startToJoinPage}>JOIN</button>
+        </div>
+    )
+  }
+
+  const GroupPage = () =>{
+    const people = ["Heikki", "Teemu", "Matti"]
+    if(!groupViewPage){
+      return null
+    }
+    return(
+      <div>
+        <div>Your group:</div>
+        {people.map(p => 
+          <li key = {p}>{p}</li>
+        )}
+      </div>
+    )
+  }
+
+  const FindGroupPage = () => {
+
+    const handleSubmit = (event) => {
+      event.preventDefault()
+      console.log(event.target.value)
+      setGroup(event.target.value)
+    }
+
+    if(!groupNamePage){
+      return(
+        null
+      )
+    }
+    return(
+      <div>
+        <div>Enter group name</div>
+        <form onSubmit = {joinToGroupPage}>
+          <input></input>
+          <button type = "submit">JOIN</button>
+        </form>
+      </div>
+    )
   }
 
   return(
     <div>
-      hello
-      <form onSubmit={handleSearchInfo}>
-        <input type="text" value = {country} onChange={handleSetCountry}/>
-        <input type = "text" value = {city} onChange = {handleSetCity} />
-        <button type = "submit">GO!</button>
-      </form>
+      <h1> OPT2EAT </h1> 
+      <StartPage></StartPage>
+      <FindGroupPage></FindGroupPage>
+      <GroupPage></GroupPage>
+      <button onClick = {handleBackButton}>Back</button>
     </div>
   )
 }
 
-export default App;
+export default App
